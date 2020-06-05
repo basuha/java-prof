@@ -1,5 +1,6 @@
 package code_warriors;
 
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import org.junit.runners.JUnit4;
@@ -26,19 +27,21 @@ import java.util.List;
 public class Kata {
     public static char findMissingLetter(char[] array) {
         String alphabet = "abcdefghijklmnopqrstuvwxyz";
-        String input = Arrays.toString(array);
-        for (int i = alphabet.indexOf(input.charAt(0)), j = 0; i < i + array.length; i++, j++) {
-//            System.out.println(i);
+        if (Character.isUpperCase(array[0]))
+            alphabet = alphabet.toUpperCase();
+
+        for (int i = alphabet.indexOf(array[0]), j = 0; i < i + array.length; i++, j++)
             if (alphabet.charAt(i) != array[j])
                 return alphabet.charAt(i);
-        }
-        return 13;
+
+        return (char) -1;
     }
 }
 
 class SolutionTest {
     public static void main(String[] args) {
 //        System.out.println(Kata.findMissingLetter(new char[] { 'a','b','c','d','f' }));
+//        System.out.println(Kata.findMissingLetter(new char[] { 'O','Q','R','S' }));
         exampleTests();
     }
     @Test
