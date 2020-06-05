@@ -17,8 +17,8 @@ import org.junit.Test;
 public class Accumul {
     public static String accum(String s) {
         StringBuilder out = new StringBuilder();
-        for (int i = 1; i < s.length(); i++) {
-            out.append(StringUtils.capitalize(String.valueOf(s.charAt(i - 1)).repeat(i)))
+        for (int i = 1; i <= s.length(); i++) {
+            out.append(StringUtils.capitalize(String.valueOf(s.toLowerCase().charAt(i - 1)).repeat(i)))
                     .append("-");
         }
         out.deleteCharAt(out.lastIndexOf("-"));
@@ -30,7 +30,6 @@ class AccumulTest {
 
     public static void main(String[] args) {
         test();
-        System.out.println(Accumul.accum("ZpglnRxqenU"));
     }
     private static void testing(String actual, String expected) {
         assertEquals(expected, actual);
