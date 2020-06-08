@@ -1,9 +1,12 @@
 package code_warriors;
 import static org.junit.Assert.*;
+
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 
-import java.util.*;
+import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Complete the function scramble(str1, str2) that returns true if a portion of str1 characters can be rearranged to match str2, otherwise returns false.
@@ -23,11 +26,10 @@ public class Scramblies {
 
     public static boolean scramble(String str1, String str2) {
         List<Character> chars = str1.chars()
-                .mapToObj(e->(char)e).collect(Collectors.toList());
-        List<Character> word = str2.chars()
-                .mapToObj(e->(char)e).collect(Collectors.toList());
+                .mapToObj(e->(char)e)
+                .collect(Collectors.toList());
 
-        for (Character c : word) {
+        for (Character c : str2.toCharArray()) {
             if (!chars.contains(c))
                 return false;
             chars.remove(c);
