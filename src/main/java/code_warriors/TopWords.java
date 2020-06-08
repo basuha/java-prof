@@ -50,11 +50,10 @@ public class TopWords {
         Map<Integer,String> map = new HashMap<>();
 
         for (String word: words)
-            if (!word.isEmpty())
+            if (!word.isEmpty() && !word.equals("'") && !word.equals("'''"))
                 map.put(Collections.frequency(words, word), word);
         List<String> topWords = new ArrayList<>(map.values());
         Collections.reverse(topWords);
-        Iterator<String> iterator = topWords.iterator();
         List<String> top3 = new ArrayList<>();
         for (int i = 0; i < topWords.size() && i < 3; i++) {
             top3.add(topWords.get(i));
