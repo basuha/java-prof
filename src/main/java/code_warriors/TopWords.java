@@ -44,13 +44,16 @@ public class TopWords {
     public static List<String> top3(String s) {
         String[] text = s.toLowerCase().split(" ");
         for (int i = 0; i < text.length; i++)
-            text[i] = text[i].replaceAll("[:,./]", "");
+            if (text[i].matches("[\\W]")) {
+                text[i] = "";
+            } else {
+                text[i] = text[i].replaceAll("[:,./]", "");
+            }
 
         List<String> words = new ArrayList<>(Arrays.asList(text));
         Map<Integer,String> map = new HashMap<>();
-
         for (String word: words)
-            if (!word.isEmpty() && !word.equals("'") && !word.equals("'''"))
+            if (!word.isEmpty())
                 map.put(Collections.frequency(words, word), word);
         List<String> topWords = new ArrayList<>(map.values());
         Collections.reverse(topWords);

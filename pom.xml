@@ -20,6 +20,14 @@
         </plugins>
     </build>
     <dependencies>
+
+        <!-- https://mvnrepository.com/artifact/com.jgoodies/forms -->
+        <dependency>
+            <groupId>com.jgoodies</groupId>
+            <artifactId>forms</artifactId>
+            <version>LATEST</version>
+        </dependency>
+
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
