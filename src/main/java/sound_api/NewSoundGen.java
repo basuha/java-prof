@@ -3,60 +3,55 @@ package sound_api;
 import javax.sound.sampled.LineUnavailableException;
 
 public class NewSoundGen extends SoundGeneratorRepo {
-    public double A4 = 440.;
-    private Sound sound;
+    public static double A4 = 440.;
 
-    private int SAMPLE_RATE = 44100; // 16 * 1024 or ~16KHz
+    private static int SAMPLE_RATE = 44100; // 16 * 1024 or ~16KHz
 
-    public final byte FADE_NONE = 0;
-    public final byte FADE_LINEAR = 1;
-    public final byte FADE_QUADRATIC = 2;
+    public static final byte FADE_NONE = 0;
+    public static final byte FADE_LINEAR = 1;
+    public static final byte FADE_QUADRATIC = 2;
 
-    public final byte WAVE_SIN = 0;
-    public final byte WAVE_SQUARE = 1;
-    public final byte WAVE_TRIANGLE = 2;
-    public final byte WAVE_SAWTOOTH = 3;
+    public static final byte WAVE_SIN = 0;
+    public static final byte WAVE_SQUARE = 1;
+    public static final byte WAVE_TRIANGLE = 2;
+    public static final byte WAVE_SAWTOOTH = 3;
 
-    private double BYTE_OSCI = 127.0; // max value for byte
+    private static double BYTE_OSCI = 127.0; // max value for byte
 
-    public NewSoundGen(Sound sound) {
-        this.sound = sound;
-    }
-
-    private double no_fade(double i, int max) {
+    private static double no_fade(double i, int max) {
         return 1;
     }
 
-    private double linear_fade(double i,int max) {
+    private static double linear_fade(double i,int max) {
         return  (max-(float)i) / max;
     }
 
-    private double quadratic_fade(double i,int max) {
+    private static double quadratic_fade(double i,int max) {
         return (-1/Math.pow(max, 2))*Math.pow(i, 2) + 1; // (-1/ max^2) * i^2 + 1
     }
 
-    private double sin_wave(double i,double period) {
+    private static double sin_wave(double i,double period) {
         return Math.sin(2.0 * Math.PI * i / period);
     }
 
-    private double square_wave(double i,double period) {
+    private static double square_wave(double i,double period) {
         return (i % period) / period < .5 ? 1 : -1;
     }
 
-    private double triangle_wave(double i,double period) {
+    private static double triangle_wave(double i,double period) {
         return Math.asin(Math.sin((2 * Math.PI) * (i / period)));
     }
 
-    private double sawtooth_wave(double i,double period) {
+    private static double sawtooth_wave(double i,double period) {
         return -1 + 2 * ((i % period) / period);
     }
 
-    public void playGradient(double fstart, double fend, double duration, double volume, byte fadeend, byte wave) {
-        byte[] freqdata = new byte[(int)(duration * SAMPLE_RATE)];
+    public static void playGradient(double fstart, double fend, double duration, double volume, byte fadeend, byte wave) {
+        byte[] freqdata = new byte[(int) (duration * SAMPLE_RATE)];
 
         // Generate the sound
         for(int i = 0; i < freqdata.length; i++) {
-            freqdata[i] = (byte)generateValue(i, duration, fstart + (fend-fstart) * (i/(double)freqdata.length), volume, fadeend, wave);
+            freqdata[i] = (byte) generateValue(i, duration, fstart + (fend - fstart) * (i / (double) freqdata.length), volume, fadeend, wave);
         }
 
         // Play it
@@ -77,9 +72,8 @@ public class NewSoundGen extends SoundGeneratorRepo {
      * double[] freqs = {440.0,440*1.5}; <br/>
      * SoundGenerator.playSound(freqs,1.0,0.5,SoundGenerator.FADE_LINEAR,SoundGenerator.WAVE_SIN);
      * </code>
-     *
      */
-    public void playSounds(double[] freqs, double duration, double volume, byte fade, byte wave) {
+    public static void playSounds(double[] freqs, double duration, double volume, byte fade, byte wave) {
         if(freqs.length == 0) {
             System.err.println("No frequences to play !");
             return;
@@ -110,6 +104,7 @@ public class NewSoundGen extends SoundGeneratorRepo {
             e.printStackTrace();
         }
     }
+
     /**
      * Play a sound at a given frequency freq during duration (in seconds) with volume as strenght
      * <br/><br/>
@@ -117,7 +112,7 @@ public class NewSoundGen extends SoundGeneratorRepo {
      * Available fades : FADE_NONE, FADE_LINEAR, FADE_QUADRATIC<br/>
      * Available waves : WAVE_SIN, WAVE_SQUARE, WAVE_TRIANGLE, WAVE_SAWTOOTH<br/>
      */
-    public void playSound(double freq,double duration,double volume,byte fade,byte wave){
+    public static void playSound(double freq,double duration,double volume,byte fade,byte wave){
 
         double[] soundData = generateSoundData(freq,duration,volume,fade,wave);
         byte[] freqdata = new byte[soundData.length];
@@ -137,7 +132,8 @@ public class NewSoundGen extends SoundGeneratorRepo {
             e.printStackTrace();
         }
     }
-    public double generateValue(double i,double duration,double freq,double volume,byte fade,byte wave) {
+
+    public static double generateValue(double i,double duration,double freq,double volume,byte fade,byte wave) {
         double period = (double)SAMPLE_RATE / freq;
         double fade_data = 0;
         double wave_data = 0;
@@ -170,7 +166,8 @@ public class NewSoundGen extends SoundGeneratorRepo {
         }
         return (wave_data * BYTE_OSCI * fade_data*volume);
     }
-    public double[] generateSoundData(double freq,double duration,double volume,byte fade,byte wave) {
+
+    public static double[] generateSoundData(double freq,double duration,double volume,byte fade,byte wave) {
         double[] freqdata = new double[(int)(duration * SAMPLE_RATE)];
 
         // Generate the sound
@@ -179,10 +176,12 @@ public class NewSoundGen extends SoundGeneratorRepo {
         }
         return freqdata;
     }
-    public void sampleRate(int sr){
+
+    public static void sampleRate(int sr){
         SAMPLE_RATE = sr;
     }
-    public int sampleRate(){
+
+    public static int sampleRate(){
         return SAMPLE_RATE;
     }
 }

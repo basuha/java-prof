@@ -63,6 +63,7 @@
                   <forms defaultalign-horz="false"/>
                 </constraints>
                 <properties>
+                  <enabled value="false"/>
                   <name value="Продолжительность"/>
                 </properties>
               </component>

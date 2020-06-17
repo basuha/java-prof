@@ -33,8 +33,9 @@ public class Main extends JDialog {
     private JLabel waveFormLabel;
     private JPanel imgPanel;
     private JButton buttonOK;
-    private CustomJPanel customJPanel = new CustomJPanel();
+    private final CustomJPanel customJPanel = new CustomJPanel();
     private JLabel image;
+    private SoundPlayer soundPlayer;
 //    private final SoundGenerator soundGenerator = new SinWaveGenerator();
 //    private final NewSoundGen newSoundGen = new NewSoundGen();
 
@@ -114,6 +115,8 @@ public class Main extends JDialog {
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
 
+        imgPanel.setLayout(new GridBagLayout());
+
         initDurValue();
         initFadeValue();
         initFreqValue();
@@ -158,32 +161,53 @@ public class Main extends JDialog {
         playB.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                NewSoundGen.playSound(freqSlider.getValue()
-                        , durSlider.getValue() / 10d
-                        , volumeSlider.getValue()
-                        , (byte) fadeSlider.getValue()
-                        , (byte) waveFormSlider.getValue());
+                soundPlayer = new SoundPlayer(
+                        new Sound(freqSlider.getValue()
+//                                , durSlider.getValue() / 10d
+                                , 0.5
+                                , volumeSlider.getValue()
+                                , (byte) fadeSlider.getValue()
+                                , (byte) waveFormSlider.getValue()));
+                soundPlayer.play();
+                draw(soundPlayer.getSoundData());
             }
         });
-        imgPanel.setLayout(new GridBagLayout());
-        draw();
     }
 
-    private void draw() {
-        final BufferedImage img = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
-        for (int i = 0; i < 100; i++) {
-            for (int j = 0; j < 100; j++) {
-                img.setRGB(i,j,i + 45);
+    private void draw(double[] soundData) {
+        imgPanel.removeAll();
+        System.out.println(soundData.length);
+        final BufferedImage img = new BufferedImage(1000, 1000, BufferedImage.TYPE_INT_RGB);
+        for (int u = 0; u < 5; u++) {
+            for (int i = 0; i < 1000; i += 2) {
+                for (int j = 0; j < 1000; j += 2) {
+                    img.setRGB(i,j, (int) soundData[i * u]);
+                }
+            }
+
+            for (int i = 0; i < 1000; i += 2) {
+                for (int j = 0; j < 1000; j++) {
+                    img.setRGB(j,i, (int) soundData[i * u]);
+                }
+            }
+
+            for (int i = 0; i < 1000; i += 3) {
+                for (int j = 0; j < 1000; j++) {
+                    img.setRGB(i,j, (int) soundData[i * u]);
+                }
+            }
+
+            for (int i = 0; i < 1000; i += 4) {
+                for (int j = 0; j < 1000; j++) {
+                    img.setRGB(j,i, (int) soundData[i * u]);
+                }
             }
         }
-        try {
-            ImageIO.write(img, "gif", new File("image.gif"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
         image = new JLabel(new ImageIcon(img));
-        image.setText("awkward");
         imgPanel.add(image);
+        imgPanel.updateUI();
+        pack();
     }
 
     public static void main(String[] args) throws InterruptedException {
