@@ -176,30 +176,14 @@ public class Main extends JDialog {
 
     private void draw(double[] soundData) {
         imgPanel.removeAll();
-        System.out.println(soundData.length);
+        for (double d : soundData) {
+            System.out.println(d);
+        }
         final BufferedImage img = new BufferedImage(1000, 1000, BufferedImage.TYPE_INT_RGB);
         for (int u = 0; u < 5; u++) {
             for (int i = 0; i < 1000; i += 2) {
                 for (int j = 0; j < 1000; j += 2) {
                     img.setRGB(i,j, (int) soundData[i * u]);
-                }
-            }
-
-            for (int i = 0; i < 1000; i += 2) {
-                for (int j = 0; j < 1000; j++) {
-                    img.setRGB(j,i, (int) soundData[i * u]);
-                }
-            }
-
-            for (int i = 0; i < 1000; i += 3) {
-                for (int j = 0; j < 1000; j++) {
-                    img.setRGB(i,j, (int) soundData[i * u]);
-                }
-            }
-
-            for (int i = 0; i < 1000; i += 4) {
-                for (int j = 0; j < 1000; j++) {
-                    img.setRGB(j,i, (int) soundData[i * u]);
                 }
             }
         }
