@@ -1,4 +1,4 @@
-package alishev;
+package alishev.collections;
 
 import java.util.ArrayList;
 import java.util.Iterator;

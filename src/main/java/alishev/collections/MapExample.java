@@ -1,4 +1,4 @@
-package alishev;
+package alishev.collections;
 
 import java.util.HashMap;
 import java.util.Map;

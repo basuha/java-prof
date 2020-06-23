@@ -13,24 +13,12 @@ public class Dubstep {
 
     public static String SongDecoder (String song)
     {
-        List<Character> chars = song.replaceAll("WUB", " ").trim().chars()
-                .mapToObj(e -> (char)e)
-                .collect(Collectors.toList());
-        Iterator<Character> iterator = chars.iterator();
-
-        for (int i = 0, count = 0; iterator.hasNext(); i++) {
-            char c = iterator.next();
-            if (c == ' ') {
-                count++;
-                if (count > 1) {
-                    chars.remove(i);
-                }
-            }
-        }
-
-        return StringUtils.join(chars,"");
+        return song.replaceAll("(WUB)+", " ").trim();
     }
 }
+
+
+
 
 class SongTests {
     public static void main(String[] args) {
