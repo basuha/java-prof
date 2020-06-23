@@ -1,11 +1,6 @@
-package code_warriors;
+package code_wars;
 
-import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
-
-import java.security.DigestInputStream;
-import java.util.*;
-import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
 

@@ -1,4 +1,4 @@
-package code_warriors;
+package code_wars;
 
 import org.apache.commons.lang3.StringUtils;
 import java.util.Arrays;

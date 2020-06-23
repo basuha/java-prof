@@ -1,4 +1,4 @@
-package code_warriors;
+package code_wars;
 import static org.junit.Assert.*;
 
 import org.apache.commons.lang3.StringUtils;

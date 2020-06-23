@@ -1,13 +1,10 @@
-package code_warriors;
+package code_wars;
 
 import java.util.*;
 
-import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
-import org.junit.runners.JUnit4;
 
-import java.util.regex.Pattern;
 import java.util.stream.*;
 
 
